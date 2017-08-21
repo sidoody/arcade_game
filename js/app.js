@@ -36,8 +36,15 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+Player.prototype.reset = function() {
+  this.x = 200;
+  this.y = 400;
+};
 
 Player.prototype.update = function() {
+  if (this.y < 0) {
+    this.reset();
+  }
 };
 
 // Now instantiate your objects.
@@ -61,7 +68,7 @@ player.handleInput = function(key) {
     if (key === 'left' && player.x > 0) {
         player.x -= player.speed;
     }
-    if (key === 'up' && player.y > 0) {
+    if (key === 'up' && player.y > -10) {
         player.y -= player.speed;
     }
     if (key === 'right' && player.x < 400) {
