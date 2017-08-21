@@ -2,7 +2,7 @@
 var Enemy = function(x, y, speed) { //this is an enemy..now below put what it needs
     this.x = x;  //x location attribute is x passed into function
     this.y = y;  //y location attribute is y passed into function
-    this.sprite = 'images/enemy-bug.png'; //image
+    this.sprite = 'images/walker.png'; //image
     this.speed = speed; //speed of enemy is speed put into function
 };
 
@@ -15,6 +15,10 @@ Enemy.prototype.update = function(dt) {
   else {
     this.x = -100;
   }
+
+  if(this.x < player.x + 50 && this.x + 50 > player.x && this.y < player.y + 50 && this.y + 50 > player.y) {
+    player.reset();
+}
 };
 
 // Draw the enemy on the screen, required method for game
@@ -29,8 +33,8 @@ var Player = function(x, y, speed) {
   this.x = x; // xlocation passed into function
   this.y = y; //y location passed into function
   this.speed = speed; //speed of the player (will be used to move)
-  this.sprite = "images/char-boy.png";
-}
+  this.sprite = "images/hodor.png";
+};
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -38,21 +42,25 @@ Player.prototype.render = function() {
 
 Player.prototype.reset = function() {
   this.x = 200;
-  this.y = 400;
+  this.y = 450;
 };
 
 Player.prototype.update = function() {
-  if (this.y < 0) {
+  if (this.y < 0) {  //hits water
+    score += 1;
+    console.log("the score is:" + score);
     this.reset();
   }
+
+
 };
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var allEnemies = [new Enemy(-100, 210,100), new Enemy(-100, 130, 200), new Enemy(-100, 50, 300)];
-var player = new Player(200, 400, 100);
-
+var player = new Player(200, 450, 100);
+var score = 0;
 /*
 for collisions:
 
@@ -78,6 +86,8 @@ player.handleInput = function(key) {
         player.y += player.speed;
     }
 };
+
+
 
 
 
